@@ -7,10 +7,12 @@ const app = express();
 const Exeption = require("./classes/exeption");
 const errorMiddleware = require("./middlewares/errorMiddleware");
 const connectDB = require("./config/db");
+const cloudinaryConfig = require("./config/cloudinary");
 const userRoutes = require("./routes/userRoutes");
 const skillRoutes = require("./routes/skillRoute");
 
 connectDB();
+cloudinaryConfig();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended:false }));

@@ -9,7 +9,7 @@ const { create, getSkills, update, remove } = require("../controllers/skillContr
 
 router.get("/", authMiddleware, getSkills);
 router.post("/", authMiddleware, upload.single("image"), create);
-router.put("/", authMiddleware, update);
-router.delete("/", authMiddleware, remove);
+router.put("/:id", authMiddleware, update);
+router.delete("/:id", authMiddleware, remove);
 
 module.exports = router;
