@@ -1,5 +1,8 @@
 const Exeption = require("../classes/exeption");
 const userModel = require("../models/userModel");
+const skillModel = require("../models/skillModel");
+const settingsModel = require("../models/settingsModel");
+const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -44,8 +47,10 @@ exports.register = async (req, res, next) => {
         const salt = await bcrypt.genSalt(8);
         const hashedPass = await bcrypt.hash(password, salt);
         const user = await userModel.create({ name, email, password: hashedPass });
+        await settingsModel.create({ userid: user.id });
 
         const token = generateToken(user.id);
+
         res.cookie("token", token, { httpOnly: true, maxAge: 12*60*60*1000 });
         res.status(201).json({ success: true });
     } catch (error) {
@@ -72,7 +77,40 @@ exports.remove = async (req, res, next) => {
     try {
         const user = req.user;
         if (!user) throw new Exeption("Invalid authentification", 400, true);
-        await user.delete();
+
+        await skillModel.deleteMany({ userid: user.id });
+        await settingsModel.findOneAndDelete({ userid: user.id });
+        await userModel.findByIdAndDelete(user.id);
+        
+        res.cookie("token", "", { maxAge: 0 });
+        res.status(200).json({ success: true });
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.updateAdmin = async (req, res, next) => {
+    try {
+        const { name, email } = req.body;
+        const { id } = req.param;
+        await userModel.findByIdAndUpdate(id, { name, email });
+        res.status(200).json({ success: true });
+    } catch (error) {
+        if (error.code && error.code === 11000) error = new Exeption("This user already exists", 400, true)
+        next(error);
+    }
+};
+
+exports.removeAdmin = async (req, res, next) => {
+    try {
+        const { id } = req.param;
+
+        if (await userModel.findById(id)) throw new Exeption("User not found", 404, true);
+
+        await skillModel.deleteMany({ userid: id });
+        await settingsModel.findOneAndDelete({ userid: id });
+        await userModel.findByIdAndUpdate(id);
+        
         res.status(200).json({ success: true });
     } catch (error) {
         next(error);

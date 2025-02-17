@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const skillSchema = mongoose.Schema ({
-    userid: { type: mongoose.Schema.ObjectId },
+    userid: { type: mongoose.Schema.ObjectId, index: true },
     title: { type: String, require: true },
     category: { type: String, require: true },
     level: { type: String, enum: ["Débutant", "intermédiaire", "Expert"] },

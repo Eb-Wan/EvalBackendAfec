@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const Exeption = require("../classes/exeption");
 const userModel = require("../models/userModel");
 
-const authMiddleware = async (req, res, next) => {
+exports.authMiddleware = async (req, res, next) => {
     try {
         const token = req.cookies.token;
         if (!token) throw new Exeption("No provided token", 401, true);
@@ -21,4 +21,12 @@ const authMiddleware = async (req, res, next) => {
    
 };
 
-module.exports = authMiddleware;
+exports.isAdmin = async (req, res, next) => {
+    try {
+        if (req.user.role !== "admin") throw new Exeption("Forbidden", 403, true);
+        next();
+    } catch (error) {
+        next(error);
+    }
+   
+};

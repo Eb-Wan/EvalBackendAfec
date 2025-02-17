@@ -1,13 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const authMiddleware = require("../middlewares/authMiddleware");
+const { authMiddleware, isAdmin } = require("../middlewares/protectMiddleware");
 
-const { login, logout, register, update, remove } = require("../controllers/userController");
+const { validateRegister, validateRequest } = require("../middlewares/validatorMiddleware");
+
+const { login, logout, register, update, remove, updateAdmin, removeAdmin } = require("../controllers/userController");
 
 router.post("/login", login);
 router.get("/logout", logout);
-router.post("/", register);
+router.get("/", authMiddleware, isAdmin);
+router.post("/", validateRegister, validateRequest, register);
 router.put("/", authMiddleware, update);
 router.delete("/", authMiddleware, remove);
+
+router.put("/:id", authMiddleware, isAdmin, updateAdmin);
+router.delete("/:id", authMiddleware, isAdmin, removeAdmin);
 
 module.exports = router;

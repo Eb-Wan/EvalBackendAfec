@@ -1,6 +1,9 @@
 const dotenv = require("dotenv");
 dotenv.config();
+
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const helmet = require("helmet");
 const express = require("express");
 const app = express();
 
@@ -9,16 +12,20 @@ const errorMiddleware = require("./middlewares/errorMiddleware");
 const connectDB = require("./config/db");
 const cloudinaryConfig = require("./config/cloudinary");
 const userRoutes = require("./routes/userRoutes");
-const skillRoutes = require("./routes/skillRoute");
+const skillRoutes = require("./routes/skillRoutes");
+const settingsRoutes = require("./routes/settingsRoutes");
 
 connectDB();
 cloudinaryConfig();
 
+app.use(cors({ origin: process.env.CORS_ORIGIN, credentials:true }))
+app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended:false }));
 app.use(cookieParser());
 app.use("/api/user", userRoutes);
 app.use("/api/skill", skillRoutes);
+app.use("/api/settings", settingsRoutes);
 
 app.use(errorMiddleware);
 

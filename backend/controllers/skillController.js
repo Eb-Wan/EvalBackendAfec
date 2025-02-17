@@ -5,7 +5,8 @@ const fs = require("fs");
 
 exports.getSkills = async (req, res, next) => {
     try {
-        const skills = await skillModel.find();
+        const userid = req.user.id;
+        const skills = await skillModel.find({ userid });
         if (!skills) throw new Exeption("No skills have been created", 404, true);
         res.status(200).json({ success: true, skills });
     } catch (error) {
@@ -40,6 +41,12 @@ exports.update = async (req, res, next) => {
     try {
         const { title, category, level } = req.body;
         const { id } = req.param;
+        const user = req.user;
+
+        const skill = await skillModel.findOne(id);
+
+        if (!skill) throw new Exeption("Skill not found", 404, true);
+        if (skill.userid.toString() !== user.id) throw new Exeption("You do not have the rights to access this skill", 403);
 
         await skillModel.findByIdAndUpdate(id, { title, category, level });
         res.status(200).json({ success: true });
@@ -51,8 +58,13 @@ exports.update = async (req, res, next) => {
 exports.remove = async (req, res, next) => {
     try {
         const { id } = req.params;
+        const user = req.user;
+
         const skill = await skillModel.findById(id);
+        console.log(skill.userid.toString(), user.id)
+
         if (!skill) throw new Exeption("Skill not found", 404, true);
+        if (skill.userid.toString() !== user.id) throw new Exeption("You do not have the rights to access this skill", 403, true);
 
         await cloudinary.uploader.destroy(skill.imgid);
         await skillModel.findByIdAndDelete(id);
