@@ -2,8 +2,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const cookieParser = require("cookie-parser");
+const fs = require("fs");
 const cors = require("cors");
 const helmet = require("helmet");
+const morgan = require("morgan");
 const express = require("express");
 const app = express();
 
@@ -18,8 +20,12 @@ const settingsRoutes = require("./routes/settingsRoutes");
 connectDB();
 cloudinaryConfig();
 
+
+const accessLogStream = fs.createWriteStream("./logs/access.log", { flags: 'a' })
+
 app.use(cors({ origin: process.env.CORS_ORIGIN, credentials:true }))
 app.use(helmet());
+app.use(morgan("common", { stream: accessLogStream }));
 app.use(express.json());
 app.use(express.urlencoded({ extended:false }));
 app.use(cookieParser());
