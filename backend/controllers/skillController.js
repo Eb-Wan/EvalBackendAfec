@@ -5,9 +5,9 @@ const fs = require("fs");
 
 exports.getSkills = async (req, res, next) => {
     try {
-        const userid = req.user.id;
+        const { userid } = req.params;
         const skills = await skillModel.find({ userid });
-        if (!skills) throw new Exeption("No skills have been created", 404, true);
+        if (!skills) throw new Exeption("No skills have been found", 404, true);
         res.status(200).json({ success: true, skills });
     } catch (error) {
         next(error);
