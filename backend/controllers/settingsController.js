@@ -4,7 +4,7 @@ const settingsModel = require("../models/settingsModel");
 exports.getSettings = async (req, res, next) => {
     try {
         const id = req.user.id;
-        const settings = await settingsModel.find({ userid: id });
+        const settings = await settingsModel.findOne({ userid: id });
 
         if (!settings) throw new Exeption("No settings found", 404, true);
         res.status(200).json({ success: true, settings });

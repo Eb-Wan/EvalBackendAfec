@@ -3,14 +3,20 @@ const userModel = require("../models/userModel");
 const skillModel = require("../models/skillModel");
 const settingsModel = require("../models/settingsModel");
 const mongoose = require("mongoose");
+const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { json } = require("express");
 
 const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "12h" });
 
 exports.login = async (req, res, next) => {
     try {
-        const { name, password } = req.body;
+        const { name, password, captchaToken } = req.body;
+
+        const captcha = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET}&response=${captchaToken}`);
+
+        if (!captcha.data.success) throw new Exeption("reCaptcha test failed", 403, true, captcha.data);
 
         const missingFields = (!name ? "name, " : "")+(!password ? "password, " : "");
         if (missingFields) throw new Exeption(`Missing fields ${missingFields}got undefined`, 400, true);
@@ -39,8 +45,13 @@ exports.logout = async (req, res, next) => {
 
 exports.register = async (req, res, next) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, captchaToken } = req.body;
         
+        const captcha = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET}&response=${captchaToken}`);
+
+        if (!captcha) throw new Exeption("reCaptcha validation error", 500, true);
+        if (!captcha.success) throw new Exeption("reCaptcha test failed", 403, true);
+
         const missingFields = (!name ? "name, " : "")+(!email ? "email, " : "")+(!password ? "password, " : "");
         if (missingFields) throw new Exeption(`Missing fields ${missingFields}got undefined`, 400, true);
         
@@ -112,6 +123,15 @@ exports.removeAdmin = async (req, res, next) => {
         await userModel.findByIdAndUpdate(id);
         
         res.status(200).json({ success: true });
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.getUsersAdmin = async (req, res, next) => {
+    try {
+        const users = await userModel.find();
+        res.status(200).json({ success: true, users })
     } catch (error) {
         next(error);
     }
