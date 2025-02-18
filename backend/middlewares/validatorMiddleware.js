@@ -12,6 +12,8 @@ exports.validateSkill = [
     body("level").trim().exists().notEmpty().withMessage("Level is required").escape()
 ];
 
+exports.validateSettings = [body("acceptsCookies").isBoolean()];
+
 exports.validateRequest = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ success: false, errors });

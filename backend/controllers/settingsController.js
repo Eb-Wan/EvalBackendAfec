@@ -15,7 +15,12 @@ exports.getSettings = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
     try {
+		const { acceptsCookies } = req.body;
+		const userid = req.user.id;
+
+		await settingsModel.findOneAndUpdate({ userid },{ acceptsCookies });
         
+		res.status(200).json({ success: true });
     } catch (error) {
         next(error);
     }
@@ -23,7 +28,11 @@ exports.update = async (req, res, next) => {
 
 exports.remove = async (req, res, next) => {
     try {
-       
+		const userid = req.user.id;
+
+		await settingsModel.findOneAndDelete({ userid });
+        
+		res.status(200).json({ success: true });
     } catch (error) {
         next(error);
     }
