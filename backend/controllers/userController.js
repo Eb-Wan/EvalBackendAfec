@@ -10,6 +10,15 @@ const { json } = require("express");
 
 const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "12h" });
 
+exports.listUsers = async (req, res, next) => {
+    try {
+        const users = await userModel.find().select("-_id name");
+        res.status(200).json({ success: true, users })
+    } catch (error) {
+        next(error);
+    }
+}
+
 exports.login = async (req, res, next) => {
     try {
         const { name, password, captchaToken } = req.body;

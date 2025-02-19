@@ -11,20 +11,28 @@ import Dashboard from "./pages/Dashboard"
 import Login from "./pages/Login";
 import Register from "./pages/Register"
 
+import { useState, useEffect } from "react";
+import apiClient from "./axiosConfig";
+
 function App() {
+  const [isConnected, setConnected] = useState(false);
+  useEffect(() => {
+    if (!document.cookie) return;
+    setConnected(true);
+  }, []);
   return (
     <>
-      <Navbar />
       <Router>
+      <Navbar isConnected={isConnected} />
         <Routes>
-          <Route path='/' component={ <Home /> } />
-          <Route path='/portfolio' component={ <Portfolio /> } />
-          <Route path='/dashboard' component={ <Dashboard /> } />
-          <Route path='/login' component={ <Login /> } />
-          <Route path='/register' component={ <Register /> } />
+          <Route path='/' element={ <Home /> } />
+          <Route path='/portfolio' element={ <Portfolio /> } />
+          <Route path='/dashboard' element={ <Dashboard /> } />
+          <Route path='/login' element={ <Login /> } />
+          <Route path='/register' element={ <Register /> } />
         </Routes>
-      </Router>
       <Footer />
+      </Router>
     </>
   )
 }
