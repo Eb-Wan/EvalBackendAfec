@@ -13,6 +13,7 @@ import Register from "./pages/Register"
 
 import { useState, useEffect } from "react";
 import apiClient from "./axiosConfig";
+import ProtectRoute from '../utils/ProtectRoute'
 
 function App() {
   const [isConnected, setConnected] = useState(false);
@@ -26,8 +27,8 @@ function App() {
       <Navbar isConnected={isConnected} />
         <Routes>
           <Route path='/' element={ <Home /> } />
-          <Route path='/portfolio' element={ <Portfolio /> } />
-          <Route path='/dashboard' element={ <Dashboard /> } />
+          <Route path='/portfolio' element={ <ProtectRoute><Portfolio /></ProtectRoute> } />
+          <Route path='/dashboard' element={ <ProtectRoute><Dashboard /></ProtectRoute> } />
           <Route path='/login' element={ <Login /> } />
           <Route path='/register' element={ <Register /> } />
         </Routes>
