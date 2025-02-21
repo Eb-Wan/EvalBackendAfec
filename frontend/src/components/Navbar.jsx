@@ -1,32 +1,39 @@
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { BoxArrowRight, BoxArrowInLeft, PersonLinesFill, VectorPen } from 'react-bootstrap-icons';
 
-const Navbar = ({ isConnected }) => {
+const Navbar = () => {
   const { pathname } = useLocation();
+  const [isConnected, setConnected] = useState();
+  useEffect(() => {
+    setConnected(document.cookie.includes("token"));
+  }, [pathname]);
+
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary fs-2">
         <div className="container-fluid">
-          <Link to="/" className="navbar-brand" > <img src="/vite.svg" alt="Logo" width="30" height="24" className="d-inline-block align-text-top"/>Portfolios</Link>
+          <Link to="/" aria-label="Logo John Doe" className="navbar-brand fs-1 fw-bold d-flex align-item-center" ><img src="/logolarge.webp" alt="Logo" height="70" className="d-inline-block align-text-top"/></Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div className="collapse navbar-collapse flex-grow-0" id="navbarNav">
             <ul className="navbar-nav">
               {
                 isConnected ? <>
                   <li className="nav-item">
-                    <Link className={(pathname === "/portfolio" ? "active " : "") + "nav-link"} to="/portfolio">Portfolio</Link>
+                    <Link aria-label="Compétences" title="Compétences" className={(pathname === "/dashboard" ? "active " : "") + "nav-link"} to="/dashboard"><PersonLinesFill /></Link>
                   </li>
                   <li className="nav-item">
-                    <Link className={(pathname === "/dashboard" ? "active " : "") + "nav-link"} to="/dashboard">Dashboard</Link>
+                    <Link aria-label="Se déconnecter" title="Se déconnecter" className={(pathname === "/logout" ? "active " : "") + "nav-link"} to="/logout"><BoxArrowRight /></Link>
                   </li>
                 </>:<>
                   <li className="nav-item">
-                    <Link className={(pathname === "/login" ? "active " : "") + "nav-link"} to="/login">Login</Link>
+                    <Link aria-label="S'inscrire" title="S'inscrire" className={(pathname === "/register" ? "active " : "") + "nav-link"} to="/register"><VectorPen /></Link>
                   </li>
                   <li className="nav-item">
-                    <Link className={(pathname === "/register" ? "active " : "") + "nav-link"} to="/register">Register</Link>
+                    <Link aria-label="Se connecter" title="Se connecter" className={(pathname === "/login" ? "active " : "") + "nav-link"} to="/login"><BoxArrowInLeft /></Link>
                   </li>
                 </>
               }

@@ -1,10 +1,13 @@
 import apiClient from "../axiosConfig"
 import { useForm } from "react-hook-form"
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const recaptcha = useRef(null);
+  const [info, setInfo] = useState("");
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -15,11 +18,15 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const captchaToken = recaptcha.current.getValue()
+      if (!captchaToken) {
+        setInfo("Veuillez cocher la case \"Je ne suis pas un robot\"");
+        return;
+      }
       await apiClient.post("/api/user/login", {...data, captchaToken}, { withCredentials: true });
-      window.location.replace("/");
+      navigate("/dashboard");
     } catch (error) {
-      const message = (error.password) ? error.password.data.message : error.message;
-      setError("password", { message, type: "focus" }, { shouldFocus: true })
+      const message = (error.response) ? error.response.data.message : error.message;
+      setInfo(message);
     }
   }
 
@@ -40,6 +47,7 @@ const Login = () => {
           ref={recaptcha}
           sitekey="6Lcl_NoqAAAAANvSEFCl1nT9LACx4PsfPUkRgXKN"
         />
+        {info ? <p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">{info}</p> : ""}
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
     </>
