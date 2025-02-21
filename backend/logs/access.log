@@ -41,3 +41,7 @@
 ::ffff:127.0.0.1 - - [20/Feb/2025:12:22:11 +0000] "POST /api/user/login HTTP/1.1" 200 16
 ::ffff:127.0.0.1 - - [20/Feb/2025:12:26:37 +0000] "POST /api/user/login HTTP/1.1" 200 16
 ::ffff:127.0.0.1 - - [20/Feb/2025:12:28:41 +0000] "POST /api/user/login HTTP/1.1" 200 16
+::ffff:127.0.0.1 - - [21/Feb/2025:12:25:28 +0000] "POST /api/user/login HTTP/1.1" 200 16
+::ffff:127.0.0.1 - - [21/Feb/2025:13:00:17 +0000] "POST /api/user/login HTTP/1.1" 500 50
+::ffff:127.0.0.1 - - [21/Feb/2025:13:02:26 +0000] "POST /api/user/login HTTP/1.1" 200 16
+::ffff:127.0.0.1 - - [21/Feb/2025:14:31:03 +0000] "POST /api/user/login HTTP/1.1" 200 16
