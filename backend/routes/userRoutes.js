@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 const { authMiddleware, isAdmin } = require("../middlewares/protectMiddleware");
 const { validateRegister, validateRequest } = require("../middlewares/validatorMiddleware");
-const { listUsers, login, logout, register, update, remove, updateAdmin, removeAdmin, getUsersAdmin } = require("../controllers/userController");
+const { listUsers, getRole, login, logout, register, update, remove, updateAdmin, removeAdmin, getUsersAdmin } = require("../controllers/userController");
 
 router.post("/login", login);
 router.get("/logout", logout);
 router.get("/list", listUsers);
+router.get("/role", authMiddleware, getRole);
 router.get("/", authMiddleware, isAdmin, getUsersAdmin);
 router.post("/", validateRegister, validateRequest, register);
 router.put("/", authMiddleware, update);

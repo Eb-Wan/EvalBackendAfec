@@ -2,12 +2,17 @@ const Exeption = require("../classes/exeption");
 const skillModel = require("../models/skillModel");
 const { v2: cloudinary } = require("cloudinary");
 const fs = require("fs");
+const userModel = require("../models/userModel");
 
 exports.getSkills = async (req, res, next) => {
     try {
-        const { userid } = req.params;
-        const skills = await skillModel.find({ userid });
-        if (!skills) throw new Exeption("No skills have been found", 404, true);
+        const { name } = req.params;
+        const user = await userModel.findOne({ name });
+        if (!user) throw new Exeption("User not found", 404, true);
+
+        const skills = await skillModel.find({ userid: user.id });
+
+        if (!skills) throw new Exeption("No skills have been found for this user", 404, true);
         res.status(200).json({ success: true, skills });
     } catch (error) {
         next(error);
@@ -47,8 +52,18 @@ exports.update = async (req, res, next) => {
 
         if (!skill) throw new Exeption("Skill not found", 404, true);
         if (skill.userid.toString() !== user.id) throw new Exeption("You do not have the rights to access this skill", 403);
+        
+        let imgurl = skill.imgurl;
+        let imgid = skill.imgid;
+        
+        if (req.file) {
+            await cloudinary.uploader.destroy(skill.imgid);
+            const uploadResult = await cloudinary.uploader.upload(req.file.path, { folder: 'evalImages' });
+            imgurl = uploadResult.secure_url;
+            imgid = uploadResult.public_id;
+        }
 
-        await skillModel.findByIdAndUpdate(id, { title, category, level });
+        await skillModel.findByIdAndUpdate(id, { title, category, level, imgurl, imgid });
         res.status(200).json({ success: true });
     } catch (error) {
         next(error);

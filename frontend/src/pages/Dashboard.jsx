@@ -1,8 +1,11 @@
-import React from 'react'
+import apiClient from '../axiosConfig'
 
 const Dashboard = () => {
+ 
   return (
-    <div>Dashboard</div>
+    <>
+      <div>test</div>
+    </>
   )
 }
 

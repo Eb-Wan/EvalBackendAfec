@@ -13,7 +13,7 @@ const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expires
 exports.listUsers = async (req, res, next) => {
     try {
         const users = await userModel.find().select("-_id name");
-        res.status(200).json({ success: true, users })
+        res.status(200).json({ success: true, users });
     } catch (error) {
         next(error);
     }
@@ -52,14 +52,21 @@ exports.logout = async (req, res, next) => {
     }
 };
 
+exports.getRole = async (req, res, next) => {
+    try {
+        res.status(200).json({ success: true, role: req.user.role });
+    } catch (error) {
+        next(error);        
+    }
+};
+
 exports.register = async (req, res, next) => {
     try {
         const { name, email, password, captchaToken } = req.body;
         
         const captcha = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET}&response=${captchaToken}`);
 
-        if (!captcha) throw new Exeption("reCaptcha validation error", 500, true);
-        if (!captcha.success) throw new Exeption("reCaptcha test failed", 403, true);
+        if (!captcha.data.success) throw new Exeption("reCaptcha test failed", 403, true, captcha.data);
 
         const missingFields = (!name ? "name, " : "")+(!email ? "email, " : "")+(!password ? "password, " : "");
         if (missingFields) throw new Exeption(`Missing fields ${missingFields}got undefined`, 400, true);

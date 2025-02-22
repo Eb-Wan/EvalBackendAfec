@@ -15,31 +15,31 @@ const Login = () => {
     formState: { errors }
   } = useForm()
   
-  const onSubmit = async (data) => {
-    try {
-      const captchaToken = recaptcha.current.getValue()
-      if (!captchaToken) {
-        setInfo("Veuillez cocher la case \"Je ne suis pas un robot\"");
-        return;
-      }
-      await apiClient.post("/api/user/login", {...data, captchaToken}, { withCredentials: true });
-      navigate("/dashboard");
-    } catch (error) {
+  const onSubmit = (data) => {
+    const captchaToken = recaptcha.current.getValue()
+    if (!captchaToken) {
+      setInfo("Veuillez cocher la case \"Je ne suis pas un robot\"");
+      return;
+    }
+
+    apiClient.post("/api/user/login", {...data, captchaToken}, { withCredentials: true })
+    .then(response => navigate("/"))
+    .catch ((error) => {
       const message = (error.response) ? error.response.data.message : error.message;
       setInfo(message);
-    }
+    });
   }
 
   return (
     <>
       <form className="w-75 mx-auto my-5" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
-          <label htmlFor="nameInput" className="form-label">Email address</label>
+          <label htmlFor="nameInput" className="form-label">Nom d'utilisateur ou adresse email</label>
           <input {...register("name", {required: "Ce champ est obligatoire"})} type="text" className="form-control" id="nameInput" />
           {errors.name && (<p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">{errors.name.message}</p>)}
         </div>
         <div className="mb-3">
-          <label htmlFor="passwordInput" className="form-label">Password</label>
+          <label htmlFor="passwordInput" className="form-label">Mot de passe</label>
           <input {...register("password", {required: "Ce champ est obligatoire"})} type="password" className="form-control" id="passwordInput" />
           {errors.password && (<p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">{errors.password.message}</p>)}
         </div>

@@ -4,7 +4,7 @@ import { BoxArrowRight, BoxArrowInLeft, PersonLinesFill, VectorPen } from 'react
 
 const Navbar = () => {
   const { pathname } = useLocation();
-  const [isConnected, setConnected] = useState();
+  const [isConnected, setConnected] = useState(false);
   useEffect(() => {
     setConnected(document.cookie.includes("token"));
   }, [pathname]);
