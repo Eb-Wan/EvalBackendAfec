@@ -13,7 +13,7 @@ body {
   background-size: cover;
 
   animation-name: scroll;
-  animation-duration: 20s;
+  animation-duration: 25s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 
