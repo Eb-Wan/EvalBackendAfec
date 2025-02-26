@@ -5,14 +5,12 @@ import SkillCard from '../components/SkillCard';
 import { useNavigate } from "react-router-dom"
 
 const Dashboard = () => {
-//function here for delete and update
-
   const [skills, setSkills] = useState([]);
   const [info, setInfo] = useState("");
   const [listInfo, setListInfo] = useState("");
   const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const { register, handleSubmit, formState: { errors } } = useForm();
   
   const onSubmit = (data) => {
     if (data.image.length !== 1) return setInfo("Vous ne pouvez téléverser qu'une seule image.");
@@ -23,8 +21,10 @@ const Dashboard = () => {
     }
 
     data.image = file;
-
-    apiClient.post("/api/skill/", data, { withCredentials: true, headers: { "Content-Type": "multipart/form-data" }})
+    //Create or add
+  }
+  const createSkill = (route, data) => {
+    apiClient.post(route, data, { withCredentials: true, headers: { "Content-Type": "multipart/form-data" }})
     .then(response => {
       navigate(0);
     })
@@ -33,6 +33,17 @@ const Dashboard = () => {
       setInfo(message);
     });
   }
+  const updateSkill = (route, data) => {
+    apiClient.put(route, data, { withCredentials: true, headers: { "Content-Type": "multipart/form-data" }})
+    .then(response => {
+      navigate(0);
+    })
+    .catch ((error) => {
+      const message = (error.response) ? error.response.data.message : error.message;
+      setInfo(message);
+    });
+  }
+
   useEffect(() => {
     apiClient.get("/api/skill/EB-Wan", { withCredentials: true })
     .then(response => setSkills(response.data.skills))
@@ -42,6 +53,13 @@ const Dashboard = () => {
     });
   }, [])
   
+
+  const editSkill = (id) => {
+    
+  }
+  const deleteSkill = (id) => {
+    
+  }
 
   return (
     <>

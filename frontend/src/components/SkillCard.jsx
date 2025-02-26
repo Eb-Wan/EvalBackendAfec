@@ -8,7 +8,7 @@ const SkillCard = ({ title, category, level, imgurl, id=undefined }) => {
             <p className="card-text fw-bold">Catégorie : {category}</p>
             <p className={"card-text fw-bold"  + (level === "Débutant" ? ' text-primary' : (level === "Intermédiaire" ? " text-warning" : (level === "Expert" ? " text-danger" : "")))}
             >Niveau : {level}</p>
-            {id ? <><a href="#" className="btn m-1 btn-warning fw-bold">Modifier</a><a href="#" className="btn m-1 btn-danger">Supprimer</a></> : ""}
+            {id ? <><button className="btn m-1 btn-warning fw-bold" onClick={} data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Modifier</button><a href="#" className="btn m-1 btn-danger">Supprimer</a></> : ""}
         </div>
       </div>
     </>

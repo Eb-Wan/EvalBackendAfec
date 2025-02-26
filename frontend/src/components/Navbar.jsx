@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary fs-2">
+      <nav className="navbar navbar-expand-lg text-light bg-body-tertiary fs-2">
         <div className="container-fluid">
           <Link to="/" aria-label="Logo John Doe" className="navbar-brand d-flex align-item-center" ><img src="/logolarge.webp" alt="Logo" height="60" className="d-inline-block align-text-top"/></Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

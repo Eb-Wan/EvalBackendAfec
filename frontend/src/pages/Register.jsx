@@ -1,8 +1,8 @@
 import apiClient from "../axiosConfig"
 import { useForm } from "react-hook-form"
 import { useRef, useState } from 'react';
-import ReCAPTCHA from "react-google-recaptcha";
 import { useNavigate } from "react-router-dom";
+import Captcha from "../components/Captcha";
 
 const Register = () => {
   const recaptcha = useRef(null);
@@ -11,7 +11,6 @@ const Register = () => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors }
   } = useForm()
   
@@ -53,10 +52,7 @@ const Register = () => {
             <input {...register("password2", {required: "Ce champ est obligatoire"})} type="password" className="form-control" id="passwordInput2" />
             {errors.password2 && (<p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">{errors.password2.message}</p>)}
           </div>
-          <ReCAPTCHA className="mx-auto my-4"
-            ref = { recaptcha }
-            sitekey = { import.meta.env.VITE_CAPTCHA_SITE }
-          />
+          <Captcha recaptcha={recaptcha} />
           {info ? <p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">{info}</p> : ""}
           <button type="submit" className="d-block w-50 my-5 mx-auto btn btn-primary">S'inscrire</button>
         </form>
