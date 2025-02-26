@@ -14,6 +14,7 @@ import { useState, useEffect } from "react"
 import apiClient from "./axiosConfig"
 import ProtectRoute from './utils/ProtectRoute'
 import AdminRoute from "./utils/AdminRoute"
+import PageNotFound from "./pages/PageNotFound"
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path='/login' element={ <ProtectRoute reverse={true}><Login /></ProtectRoute> } />
           <Route path='/logout' element={ <ProtectRoute><Logout /></ProtectRoute> } />
           <Route path='/register' element={ <ProtectRoute reverse={true}><Register /></ProtectRoute> } />
+          <Route path="*" element={<PageNotFound />}></Route>
         </Routes>
       <Footer />
       </Router>

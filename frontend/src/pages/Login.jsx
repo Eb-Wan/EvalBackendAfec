@@ -1,17 +1,37 @@
 import apiClient from "../axiosConfig"
 import { useForm } from "react-hook-form"
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../components/Spinner"
 
 const Login = () => {
+  const [isRecaptchaAllowed, setIsRecaptchaAllowed] = useState(null);
+
+  useEffect(() => {
+    let retries = 0;
+    const maxRetries = 10; // Stop after 10 seconds (10 * 500ms)
+
+    const checkConsent = () => {
+      if (window.tarteaucitron?.state?.recaptcha !== undefined) {
+        setIsRecaptchaAllowed(window.tarteaucitron?.state?.recaptcha);
+      } else if (retries < maxRetries) {
+        retries += 1; // Retry until maxRetries
+        setTimeout(checkConsent, 500);
+      } else {
+        setIsRecaptchaAllowed(false);
+      }
+    };
+
+    checkConsent();
+  }, []);
+
   const recaptcha = useRef(null);
   const [info, setInfo] = useState("");
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors }
   } = useForm()
   
@@ -44,10 +64,9 @@ const Login = () => {
             <input {...register("password", {required: "Ce champ est obligatoire"})} type="password" className="form-control" id="passwordInput" />
             {errors.password && (<p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">{errors.password.message}</p>)}
           </div>
-          <ReCAPTCHA className="mx-auto my-4"
-            ref = { recaptcha }
-            sitekey = { import.meta.env.VITE_CAPTCHA_SITE }
-          />
+
+          {isRecaptchaAllowed === null ? <Spinner /> : (isRecaptchaAllowed ? <ReCAPTCHA className="mx-auto my-4" ref = { recaptcha } sitekey = { import.meta.env.VITE_CAPTCHA_SITE } /> : <p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">Les cookies captcha sont désactivé, veuillez les activer pour continuer.</p>)}
+          
           {info ? <p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">{info}</p> : ""}
           <button className="d-block w-50 my-5 mx-auto btn btn-primary" type="submit">Se connecter</button>
         </form>

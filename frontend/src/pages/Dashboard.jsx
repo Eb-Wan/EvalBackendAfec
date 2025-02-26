@@ -12,7 +12,7 @@ const Dashboard = () => {
   const [listInfo, setListInfo] = useState("");
   const navigate = useNavigate();
 
-  const { register, handleSubmit, setError, reset, formState: { errors } } = useForm()
+  const { register, handleSubmit, formState: { errors } } = useForm()
   
   const onSubmit = (data) => {
     if (data.image.length !== 1) return setInfo("Vous ne pouvez téléverser qu'une seule image.");
@@ -90,7 +90,7 @@ const Dashboard = () => {
       </section>
       <section className='container mx-auto row align-items-start'>
         {listInfo ? <p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">{listInfo}</p> : ""}
-        {skills.map(e => SkillCard({ title: e.title, category: e.category, level: e.level, imgurl: e.imgurl, id: e._id }))}
+        {skills.map((e) => <SkillCard key={e._id} title={e.title} category={e.category} level={e.level} imgurl={e.imgurl} id={e._id}/>)}
       </section>
     </>
   )
