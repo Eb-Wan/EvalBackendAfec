@@ -23,14 +23,17 @@ exports.create = async (req, res, next) => {
     try {
         if (!req.file) throw new Exeption("No files uploaded", 400, true);
 
+        const fileMime = req.file.mimetype;
+        if (fileMime != "image/png" && fileMime != "image/jpeg" && fileMime != "image/gif" && fileMime != "image/bmp" && fileMime != "image/webp") {
+            throw new Exeption("PNG, JPEG, GIF, BMP et WEBP are the only types allowed", 400, true);
+        }
+
         const { title, category, level } = req.body;
         const id = req.user.id;
 
         const uploadResult = await cloudinary.uploader.upload(req.file.path, { folder: 'evalImages' });
         const imgurl = uploadResult.secure_url;
         const imgid = uploadResult.public_id;
-
-        fs.unlinkSync(req.file.path);
 
         const missingFields = (!title ? "title, " : "")+(!category ? "category, " : "")+(!level ? "level, " : "")+(!imgurl ? "imgurl, " : "");
         if (missingFields) throw new Exeption(`Missing fields ${missingFields}got undefined`, 400, true);
@@ -39,6 +42,8 @@ exports.create = async (req, res, next) => {
         res.status(201).json({ success: true });
     } catch (error) {
         next(error);
+    } finally {
+        fs.unlinkSync(req.file.path);
     }
 };
 
