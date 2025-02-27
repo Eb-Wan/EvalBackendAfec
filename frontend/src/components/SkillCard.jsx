@@ -1,4 +1,4 @@
-const SkillCard = ({ title, category, level, imgurl, id=undefined }) => {
+const SkillCard = ({ title, category, level, imgurl, id=undefined, updateSkill, deleteSkill }) => {
   return (
     <>
       <div className="card m-4 col-3" style={{width:"18rem"}}>
@@ -8,7 +8,11 @@ const SkillCard = ({ title, category, level, imgurl, id=undefined }) => {
             <p className="card-text fw-bold">Catégorie : {category}</p>
             <p className={"card-text fw-bold"  + (level === "Débutant" ? ' text-primary' : (level === "Intermédiaire" ? " text-warning" : (level === "Expert" ? " text-danger" : "")))}
             >Niveau : {level}</p>
-            {id ? <><button className="btn m-1 btn-warning fw-bold" onClick={} data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Modifier</button><a href="#" className="btn m-1 btn-danger">Supprimer</a></> : ""}
+            {
+              id ? <>
+                <button className="btn m-1 btn-warning fw-bold" onClick={() => updateSkill({ title, category, level, imgurl, id })} data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Modifier</button>
+                <button className="btn m-1 btn-danger fw-bold" onClick={() => deleteSkill(id)} data-bs-target="#confirmDeleteModal" data-bs-toggle="modal">Supprimer</button>
+              </> : ""}
         </div>
       </div>
     </>

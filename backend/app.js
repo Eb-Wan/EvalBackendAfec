@@ -22,7 +22,7 @@ cloudinaryConfig();
 
 const accessLogStream = fs.createWriteStream("./logs/access.log", { flags: 'a' })
 
-app.use(cors({ origin: process.env.CORS_ORIGIN, credentials:true }))
+app.use(cors({ origin: process.env.CORS_ORIGIN, credentials:true }));
 app.use(helmet());
 app.use(morgan("common", { stream: accessLogStream }));
 app.use(express.json());

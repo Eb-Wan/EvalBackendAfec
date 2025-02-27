@@ -7,41 +7,49 @@ import { useNavigate } from "react-router-dom"
 const Dashboard = () => {
   const [skills, setSkills] = useState([]);
   const [info, setInfo] = useState("");
+  const [deleteInfo, setDeleteInfo] = useState("");
   const [listInfo, setListInfo] = useState("");
+  const [formMethod, setFormMethod] = useState("post");
   const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
   
-  const onSubmit = (data) => {
-    if (data.image.length !== 1) return setInfo("Vous ne pouvez téléverser qu'une seule image.");
-    const file = data.image[0];    
-    if (file.type != "image/png" && file.type != "image/jpeg" && file.type != "image/gif" && file.type != "image/bmp" && file.type != "image/webp") {
-      setInfo("PNG, JPEG, GIF, BMP et WEBP sonts les seuls formats acceptées.");
-      return;
+  const onSubmit = async (data) => {
+
+    if (formMethod === "post" && data.image.length === 0) return setInfo("Veuillez ajouter une image d'illustration");
+    else if (data.image.length > 1) return setInfo("Vous ne pouvez téléverser qu'une seule image.");
+    else {
+      const file = data.image[0];    
+      if (file.type != "image/png" && file.type != "image/jpeg" && file.type != "image/gif" && file.type != "image/bmp" && file.type != "image/webp") {
+        setInfo("PNG, JPEG, GIF, BMP et WEBP sonts les seuls formats acceptées.");
+        return;
+      }
+      data.image = file;
     }
 
-    data.image = file;
-    //Create or add
-  }
-  const createSkill = (route, data) => {
-    apiClient.post(route, data, { withCredentials: true, headers: { "Content-Type": "multipart/form-data" }})
-    .then(response => {
+    try {
+      if (formMethod === "post") await apiClient.post(route, data, { withCredentials: true, headers: { "Content-Type": "multipart/form-data" }});
+      if (formMethod === "put") await apiClient.put(route, data, { withCredentials: true, headers: { "Content-Type": "multipart/form-data" }});
+      if (formMethod === "delete") await apiClient.delete(route + data.id, { withCredentials: true });
+      else throw new Error("Méthode invalide")
       navigate(0);
-    })
-    .catch ((error) => {
+    } catch (error) {
       const message = (error.response) ? error.response.data.message : error.message;
       setInfo(message);
-    });
+    }
+
   }
-  const updateSkill = (route, data) => {
-    apiClient.put(route, data, { withCredentials: true, headers: { "Content-Type": "multipart/form-data" }})
-    .then(response => {
-      navigate(0);
-    })
-    .catch ((error) => {
-      const message = (error.response) ? error.response.data.message : error.message;
-      setInfo(message);
-    });
+  
+  const updateSkill = (data) => {
+    setValue("title", data.title);
+    setValue("category", data.category);
+    setValue("level", data.level);
+    setValue("id", data.id);
+    setFormMethod("put");
+  }
+  const deleteSkill = (id) => {
+    setValue("id", data.id);
+    setFormMethod("put");
   }
 
   useEffect(() => {
@@ -52,28 +60,41 @@ const Dashboard = () => {
       setListInfo(message);
     });
   }, [])
-  
-
-  const editSkill = (id) => {
-    
-  }
-  const deleteSkill = (id) => {
-    
-  }
 
   return (
     <>
       <section className='container'>
-        <button className="btn btn-primary m-5" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Ajouter une compétence</button>
+        <div className="modal fade" id="confirmDeleteModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">
+          <div className="modal-dialog modal-lg modal-dialog-centered">
+            <form className="modal-content" onSubmit={handleSubmit(onSubmit)}>
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="exampleModalToggleLabel">Confirmer</h1>
+                <button onClick={() => reset()} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+                <input {...register("id")} type="hidden" id="idInput" />
+                <h2>Etes vous sûr de vouloir supprimer cet élément ?</h2>
+                {deleteInfo ? <p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">{deleteInfo}</p> : ""}
+              </div>
+              <div className="modal-footer">
+                <button className="d-block w-50 my-5 mx-auto btn btn-primary" type="submit">Supprimer</button>
+                <button className="d-block w-50 my-5 mx-auto btn btn-primary" type="submit">Annuler</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <button onClick={ () => setFormMethod("post") } className="btn btn-primary m-5" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Ajouter une compétence</button>
         <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">
           <div className="modal-dialog modal-lg modal-dialog-centered">
             <form className="modal-content" onSubmit={handleSubmit(onSubmit)}>
               <div className="modal-header">
-                <h1 className="modal-title fs-5" id="exampleModalToggleLabel">Ajouter une compétence</h1>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h1 className="modal-title fs-5" id="exampleModalToggleLabel">
+                  {formMethod === "post" ? "Ajouter une compétence" : (formMethod === "put" ? "Modifier une compétence" : "Méthode invalide")}
+                </h1>
+                <button onClick={() => reset()} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="modal-body">
-
+              <input {...register("id")} type="hidden" id="idInput" />
                 <div className="mb-3">
                   <label htmlFor="titleInput" className="form-label">Titre</label>
                   <input {...register("title", {required: "Ce champ est obligatoire"})} type="text" className="form-control" id="titleInput" />
@@ -94,7 +115,7 @@ const Dashboard = () => {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="formFile" className="form-label">Illustration</label>
-                  <input {...register("image", {required: "Ce champ est obligatoire"})} accept="image/png, image/jpeg, image/gif, image/bmp, image/webp" className="form-control" type="file" id="formFile" />
+                  <input {...register("image")} accept="image/png, image/jpeg, image/gif, image/bmp, image/webp" className="form-control" type="file" id="formFile" />
                 </div>
 
                 {info ? <p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">{info}</p> : ""}
@@ -108,7 +129,9 @@ const Dashboard = () => {
       </section>
       <section className='container mx-auto row align-items-start'>
         {listInfo ? <p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">{listInfo}</p> : ""}
-        {skills.map((e) => <SkillCard key={e._id} title={e.title} category={e.category} level={e.level} imgurl={e.imgurl} id={e._id}/>)}
+        {skills.map((e) => {
+          return <SkillCard key={e._id} title={e.title} category={e.category} level={e.level} imgurl={e.imgurl} id={e._id} updateSkill={updateSkill} deleteSkill={deleteSkill}/>
+        })}
       </section>
     </>
   )
