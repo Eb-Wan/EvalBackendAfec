@@ -10,7 +10,7 @@ exports.getSkills = async (req, res, next) => {
         const user = await userModel.findOne({ name });
         if (!user) throw new Exeption("User not found", 404, true);
 
-        const skills = await skillModel.find({ userid: user.id }).select("title category level imgurl");
+        const skills = await skillModel.find({ userid: user.id }).sort({ createdAt: -1 }).select("title category level imgurl");
 
         if (!skills) throw new Exeption("No skills have been found for this user", 404, true);
         res.status(200).json({ success: true, skills });
