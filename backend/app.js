@@ -20,6 +20,7 @@ const settingsRoutes = require("./routes/settingsRoutes");
 connectDB();
 cloudinaryConfig();
 
+if (!fs.existsSync("./logs")) fs.mkdirSync("./logs");
 const accessLogStream = fs.createWriteStream("./logs/access.log", { flags: 'a' })
 
 app.use(cors({ origin: process.env.CORS_ORIGIN, credentials:true }));
