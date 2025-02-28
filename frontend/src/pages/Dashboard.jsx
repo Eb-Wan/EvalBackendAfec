@@ -8,11 +8,6 @@ const Dashboard = () => {
   const [skills, setSkills] = useState([]);
   const [listInfo, setListInfo] = useState("");
   const [add, setAdd] = useState(false);
-  
-  const updateSkill = (data) => {
-  }
-  const deleteSkill = (id) => {
-  }
 
   useEffect(() => {
     apiClient.get("/api/skill/EB-Wan", { withCredentials: true })
@@ -38,7 +33,7 @@ const Dashboard = () => {
               {name: "category", label: "Catégorie", type: "text", value: ""},
               {name: "level", label: "Niveau", type: "select", options: [
                 {value: "Débutant", label: "Débutant"},
-                {value: "Intermédaire", label: "Intermédaire"},
+                {value: "Intermédiaire", label: "Intermédiaire"},
                 {value: "Expert", label: "Expert"}
               ]},
               {name: "image", label: "Illustration", type: "file", value: ""}
@@ -52,7 +47,7 @@ const Dashboard = () => {
       <section className='container mx-auto row align-items-start'>
         {listInfo ? <p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">{listInfo}</p> : ""}
         {skills.map((e) => {
-          return <SkillCard key={e._id} title={e.title} category={e.category} level={e.level} imgurl={e.imgurl} id={e._id} updateSkill={updateSkill} deleteSkill={deleteSkill}/>
+          return <SkillCard key={e._id} title={e.title} category={e.category} level={e.level} imgurl={e.imgurl} id={e._id} />
         })}
       </section>
     </>

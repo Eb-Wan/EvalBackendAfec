@@ -50,10 +50,10 @@ exports.create = async (req, res, next) => {
 exports.update = async (req, res, next) => {
     try {
         const { title, category, level } = req.body;
-        const { id } = req.param;
+        const { id } = req.params;
         const user = req.user;
 
-        const skill = await skillModel.findOne(id);
+        const skill = await skillModel.findById(id);
 
         if (!skill) throw new Exeption("Skill not found", 404, true);
         if (skill.userid.toString() !== user.id) throw new Exeption("You do not have the rights to access this skill", 403);
@@ -67,7 +67,7 @@ exports.update = async (req, res, next) => {
             imgurl = uploadResult.secure_url;
             imgid = uploadResult.public_id;
         }
-
+        
         await skillModel.findByIdAndUpdate(id, { title, category, level, imgurl, imgid });
         res.status(200).json({ success: true });
     } catch (error) {

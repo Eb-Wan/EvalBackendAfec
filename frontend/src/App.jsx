@@ -21,15 +21,17 @@ function App() {
     <>
       <Router>
       <Navbar />
+        <main style={{minHeight: "calc(100vh - 214px)"}}>
         <Routes>
-          <Route path='/' element={ <Home /> } />
-          <Route path='/portfolio' element={ <ProtectRoute><Portfolio /></ProtectRoute> } />
-          <Route path='/dashboard' element={ <ProtectRoute><AdminRoute><Dashboard /></AdminRoute></ProtectRoute> } />
-          <Route path='/login' element={ <ProtectRoute reverse={true}><Login /></ProtectRoute> } />
-          <Route path='/logout' element={ <ProtectRoute><Logout /></ProtectRoute> } />
-          <Route path='/register' element={ <ProtectRoute reverse={true}><Register /></ProtectRoute> } />
-          <Route path="*" element={<PageNotFound />}></Route>
+            <Route path='/' element={ <Home /> } />
+            <Route path='/portfolio' element={ <ProtectRoute><Portfolio /></ProtectRoute> } />
+            <Route path='/dashboard' element={ <ProtectRoute><AdminRoute><Dashboard /></AdminRoute></ProtectRoute> } />
+            <Route path='/login' element={ <ProtectRoute reverse={true}><Login /></ProtectRoute> } />
+            <Route path='/logout' element={ <ProtectRoute><Logout /></ProtectRoute> } />
+            <Route path='/register' element={ <ProtectRoute reverse={true}><Register /></ProtectRoute> } />
+            <Route path="*" element={<PageNotFound />}></Route>
         </Routes>
+        </main>
       <Footer />
       </Router>
     </>
