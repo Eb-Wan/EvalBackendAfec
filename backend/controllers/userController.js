@@ -36,7 +36,7 @@ exports.login = async (req, res, next) => {
         if (!passMatch) throw new Exeption("Wrong username/email or password", 400, true);
 
         const token = generateToken(user.id);
-        res.cookie("token", token, { sameSite: "strict", maxAge: 12*60*60*1000 });
+        res.cookie("token", token, { maxAge: 12*60*60*1000 });
         res.status(200).json({ success: true });
     } catch (error) {
         next(error);        

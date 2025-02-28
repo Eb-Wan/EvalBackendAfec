@@ -49,7 +49,7 @@ const Login = () => {
         </div>
         <Captcha recaptcha={recaptcha} />
         {info ? <p className="p-3 m-4 text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-3">{info}</p> : ""}
-        {isWaiting ? <Spinner className="d-block my-5 mx-auto" /> : <button type="submit" className="d-block w-50 my-5 mx-auto btn btn-primary">S'inscrire</button>}
+        {isWaiting ? <Spinner className="d-block my-5 mx-auto" /> : <button type="submit" className="d-block w-50 my-5 mx-auto btn btn-primary">Se connecter</button>}
       </form>
     </>
   )
