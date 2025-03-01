@@ -33,7 +33,7 @@ const ModalForm = ({ name, title, message, onClose, method, action, fields }) =>
       else if (method === "delete") await apiClient.delete(action, { withCredentials: true });
       else throw new Error("Méthode invalide");
       onClose();
-      navigate(0);
+      navigate("/dashboard");
     } catch (error) {
       const errorMessage = (error.response) ? error.response.data.message : error.message;
       console.error(error);
