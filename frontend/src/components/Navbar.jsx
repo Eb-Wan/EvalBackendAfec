@@ -1,13 +1,10 @@
-import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BoxArrowRight, BoxArrowInLeft, PersonLinesFill, VectorPen } from 'react-bootstrap-icons';
+import { useAuth } from '../utils/AuthProvider';
 
 const Navbar = () => {
   const { pathname } = useLocation();
-  const [isConnected, setConnected] = useState(false);
-  useEffect(() => {
-    setConnected(document.cookie.includes("token"));
-  }, [pathname]);
+  const { isLoggedIn } = useAuth();
 
   return (
     <>
@@ -21,7 +18,7 @@ const Navbar = () => {
           <div className="collapse navbar-collapse flex-grow-0" id="navbarNav">
             <ul className="navbar-nav">
               {
-                isConnected ? <>
+                isLoggedIn ? <>
                   <li className="nav-item">
                     <Link aria-label="Compétences" title="Compétences" className={(pathname === "/dashboard" ? "active " : "") + "nav-link"} to="/dashboard"><PersonLinesFill /></Link>
                   </li>

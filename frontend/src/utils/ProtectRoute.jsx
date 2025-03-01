@@ -1,21 +1,24 @@
-import { Navigate } from "react-router-dom"
-import apiClient from "../axiosConfig";
-import { useState } from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "./AuthProvider";
+import Spinner from "../components/Spinner";
+import { useEffect, useState } from "react";
 
-const ProtectRoute = ({ reverse = false, children }) => {
-    const [component, setComponent] = useState("");
-    apiClient.get("/api/user/role", { withCredentials: true })
-    .then(response => (response.data.success ^ reverse) ? setComponent(children) : setComponent(<Navigate to="/" />))
-    .catch(error => {
-        if (reverse) setComponent(children);
-        else {
-            console.error(error.message);
-            setComponent(<Navigate to="/" />);
-        }
-    });
-    return (
-        <>{component}</>
-    )
+const ProtectRoute = ({ reverse = false, admin=false, children }) => {
+  const { isLoggedIn, authLoading, userRole } = useAuth();
+  const [component, setComponent] = useState("");
+
+  useEffect(() => {
+    if (authLoading) setComponent(<Spinner />);
+    else if (reverse && !isLoggedIn) setComponent(children);
+    else if (!admin && isLoggedIn) setComponent(children);
+    else if (admin && isLoggedIn && userRole==="admin") setComponent(children);
+    else if (!reverse && !isLoggedIn) setComponent(<Navigate to="/login" />);
+    else setComponent(<Navigate to="/" />);
+  }, [isLoggedIn, authLoading]);
+
+  return (
+    <>{component}</>
+  );
 }
 
-export default ProtectRoute
+export default ProtectRoute;
