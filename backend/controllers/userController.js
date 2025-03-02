@@ -33,6 +33,7 @@ exports.login = async (req, res, next) => {
         const user = await userModel.findOne({$or: [{ email: name }, { name: name }]});
         const passMatch = user ? await bcrypt.compare(password, user.password):false;
         
+        if (!user.role === "unverified") throw new Exeption("User has not been verified", 401, true);
         if (!passMatch) throw new Exeption("Wrong username/email or password", 400, true);
 
         const isProd = process.env.PROD_ENV === "true";

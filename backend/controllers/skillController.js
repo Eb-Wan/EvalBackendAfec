@@ -81,7 +81,6 @@ exports.remove = async (req, res, next) => {
         const user = req.user;
 
         const skill = await skillModel.findById(id);
-        console.log(skill.userid.toString(), user.id)
 
         if (!skill) throw new Exeption("Skill not found", 404, true);
         if (skill.userid.toString() !== user.id) throw new Exeption("You do not have the rights to access this skill", 403, true);
