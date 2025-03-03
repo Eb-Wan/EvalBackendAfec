@@ -5,6 +5,7 @@
 - [Présentation du projet](#-projet--portfolio-dynamique-avec-dashboard)
 - [Pages et Fonctionnalitées](#Pages-et-Fonctionnalitées)
 - [Technologies](#technologies)
+- [Installation](#Installation)
 
 ## 🎯 Projet : Portfolio Dynamique avec Dashboard
 
@@ -23,20 +24,24 @@ reCAPTCHA ou Tarteaucitron) pour sécuriser l’authentification.
 ## Pages et Fonctionnalitées
 
 * Design responsive
+* Gestion des cookies comforme RGPD avec [tartaucitron](https://tarteaucitron.io/)
+* Protection contre les robots avec Google Recaptcha
+* Système d'authentification sécurisé
+* Tableau de gestion administrateur pour  les compétences
 
-1. Page d'accueil
+1. ### Page d'accueil
 
    * Liste dynamique des compétences du compte administrateur.
-2. Page "dashboard"
+2. ### Page "dashboard"
 
    * Ajout d'une compétence (titre, illustration, catégorie et niveau)
    * Modification d'une compétence (titre, illustration, catégorie et niveau)
    * Supression d'une compétence
-3. Page d'inscription
+3. ### Page d'inscription
 
    * Formulaire d'inscription (Nom, address email, mot de passe, vérification mot de passe)
    * Recaptcha
-4. Page de connexion
+4. ### Page de connexion
 
    * Formulaire de connexion (Nom/address email, mot de passe)
    * Recaptcha
@@ -65,10 +70,17 @@ reCAPTCHA ou Tarteaucitron) pour sécuriser l’authentification.
    CLOUDINARY_KEY = <VOTRE CLÉ CLOUDINARY>
    CLOUDINARY_SECRET = <VOTRE CODE SECRET CLOUDINARY>
 
-   CORS_ORIGIN = <LIEN COMPLET VERS LE VOTRE DOMAINE FRONTEND>
+   CORS_ORIGIN = <URL VERS VOTRE FRONTEND ex: http://frontend.com>
 
    RECAPTCHA_KEY = <VOTRE CLÉ RECAPTCHA>
    RECAPTCHA_SECRET = <VOTRE CODE SECRET RECAPTCHA>
 
    PROD_ENV = <false/true>
    ```
+
+4. Créez un autre fichier `.env` avec les variables d'environnement dans le dossier frontend
+   ```ini
+   VITE_API_URL=<URL VERS VOTRE BACKEND ex: http://backend.com>
+   VITE_CAPTCHA_SITE=<VOTRE CLÉ DE SITE RECAPTCHA>
+   ```
+
