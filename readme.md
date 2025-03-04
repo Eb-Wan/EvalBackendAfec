@@ -1,16 +1,8 @@
+    
+
 # Projet d'évalutation AFEC
 
 ---
-
-<p align="center" >
-  <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white">
-  <img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white">
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB">
-  <img src="https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white">
-  <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E">
-  <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white">
-  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white">
-</p>
 
 ## Index
 
@@ -28,8 +20,9 @@
   - [Prérequis](#prerequis)
   - [1. Clonnez le repo dans le dossier de votre choix](#1-clonnez-le-repo-dans-le-dossier-de-votre-choix)
   - [2. Installez les dépendances](#1-clonnez-le-repo-dans-le-dossier-de-votre-choix)
-  - [3. Créez un fichier .env avec les variables d'environnement dans le dossier backend](#3-créez-un-fichier-env-avec-les-variables-denvironnement-dans-le-dossier-backend)
-  - [4. Créez un autre fichier .env avec les variables d'environnement dans le dossier frontend](#4-créez-un-autre-fichier-env-avec-les-variables-denvironnement-dans-le-dossier-frontend)
+  - [3. Créez un fichier .env avec les variables d&#39;environnement dans le dossier backend](#3-créez-un-fichier-env-avec-les-variables-denvironnement-dans-le-dossier-backend)
+  - [4. Créez un autre fichier .env avec les variables d&#39;environnement dans le dossier frontend](#4-créez-un-autre-fichier-env-avec-les-variables-denvironnement-dans-le-dossier-frontend)
+- [Lancement](#lancement)
 
 ## 🎯 Projet : Portfolio Dynamique avec Dashboard
 
@@ -134,3 +127,29 @@ reCAPTCHA ou Tarteaucitron) pour sécuriser l’authentification.
    VITE_API_URL=<URL VERS VOTRE BACKEND ex: http://backend.com>
    VITE_CAPTCHA_SITE=<VOTRE CLÉ DE SITE RECAPTCHA>
 ```
+
+## Lancement
+
+---
+
+Pour lancer le projet, il faut avoir les deux serveurs qui tournent en parallèle.
+
+Pour démarrer le serveur backend, ouvrez un terminal dans le dossier EvalBackendAfec et tapez :
+
+```ìnit
+      cd  backend && npm run dev
+```
+
+Pour démarrer le serveur frontend, ouvrez un terminal dans le dossier EvalBackendAfec et tapez :
+
+```ìnit
+      cd frontend && npm run dev
+```
+
+Vous pouvez maintenant allez sur `http://localhost:5173`
+
+## Auteur
+
+[EB-Wan](https://github.com/Eb-Wan)
+
+[![forthebadge](https://forthebadge.com/images/featured/featured-powered-by-electricity.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/designed-in-ms-paint.svg)](https://forthebadge.com)
