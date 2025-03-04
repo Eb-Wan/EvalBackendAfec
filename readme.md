@@ -2,11 +2,7 @@
 
 # Projet d'évalutation AFEC
 
----
-
 ## Index
-
----
 
 - [Présentation du projet](#-projet--portfolio-dynamique-avec-dashboard)
   - [Énoncé](#énoncé)
@@ -23,10 +19,9 @@
   - [3. Créez un fichier .env avec les variables d&#39;environnement dans le dossier backend](#3-créez-un-fichier-env-avec-les-variables-denvironnement-dans-le-dossier-backend)
   - [4. Créez un autre fichier .env avec les variables d&#39;environnement dans le dossier frontend](#4-créez-un-autre-fichier-env-avec-les-variables-denvironnement-dans-le-dossier-frontend)
 - [Lancement](#lancement)
+- [Auteur](#auteur)
 
-## 🎯 Projet : Portfolio Dynamique avec Dashboard
-
----
+## Projet : Portfolio Dynamique avec Dashboard
 
 Ce projet est un portofolio dynamique, créé en suivant un cahier des charges. L'application permet a un utilisateur admin de gérer une liste de compétences à aficher sur la page d'accueil, conformément à la maquette.
 
@@ -41,8 +36,6 @@ système de gestion des cookies (Tarteaucitron.js) et un Captcha (Google
 reCAPTCHA ou Tarteaucitron) pour sécuriser l’authentification.
 
 ## Pages et Fonctionnalitées
-
----
 
 * Design responsive
 * Gestion des cookies comforme RGPD avec [tartaucitron](https://tarteaucitron.io/)
@@ -69,8 +62,6 @@ reCAPTCHA ou Tarteaucitron) pour sécuriser l’authentification.
 
 ## Technologies
 
----
-
 * ![MongoDB](https://img.shields.io/badge/MongoDB-4.2-green?logo=mongodb) Base de données de la stack MERN
 * ![Express](https://img.shields.io/badge/Express-4.17.1-blue?logo=express) Framework pour créer le serveur HTTP
 * ![React](https://img.shields.io/badge/React-17.0.2-blue?logo=react) Bibliothèque pour créer et gérer l'interface utilisateur (frontend)
@@ -81,8 +72,6 @@ reCAPTCHA ou Tarteaucitron) pour sécuriser l’authentification.
 * ![Render](https://img.shields.io/badge/Render-Deployment-lightgrey?logo=render) Hébergement du backend (serveur Express)
 
 ## Installation :
-
----
 
 ### Prérequis :
 
@@ -129,8 +118,6 @@ reCAPTCHA ou Tarteaucitron) pour sécuriser l’authentification.
 ```
 
 ## Lancement
-
----
 
 Pour lancer le projet, il faut avoir les deux serveurs qui tournent en parallèle.
 
