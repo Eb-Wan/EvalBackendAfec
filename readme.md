@@ -17,12 +17,19 @@
 ---
 
 - [Présentation du projet](#-projet--portfolio-dynamique-avec-dashboard)
-  - [Énoncé](#Énoncé)
+  - [Énoncé](#énoncé)
 - [Pages et Fonctionnalitées](#Pages-et-Fonctionnalitées)
-  - [Pages d&#39;accueil](Pages-d'accueil)
-  - 
+  - [Pages d&#39;accueil](#page-daccueil)
+  - [Page &#34;dashboard&#34;](#page-dashboard)
+  - [Page d&#39;inscription](#page-dinscription)
+  - [Page de connexion](#page-dinscription)
 - [Technologies](#technologies)
 - [Installation](#Installation)
+  - [Prérequis](#prerequis)
+  - [1. Clonnez le repo dans le dossier de votre choix](#1-clonnez-le-repo-dans-le-dossier-de-votre-choix)
+  - [2. Installez les dépendances](#1-clonnez-le-repo-dans-le-dossier-de-votre-choix)
+  - [3. Créez un fichier .env avec les variables d'environnement dans le dossier backend](#3-créez-un-fichier-env-avec-les-variables-denvironnement-dans-le-dossier-backend)
+  - [4. Créez un autre fichier .env avec les variables d'environnement dans le dossier frontend](#4-créez-un-autre-fichier-env-avec-les-variables-denvironnement-dans-le-dossier-frontend)
 
 ## 🎯 Projet : Portfolio Dynamique avec Dashboard
 
