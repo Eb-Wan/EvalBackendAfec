@@ -1,6 +1,7 @@
 # Projet d'évalutation AFEC
 
 ---
+
 <p align="center" >
   <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white">
   <img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white">
@@ -11,13 +12,15 @@
   <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white">
 </p>
 
-
 ## Index
 
 ---
 
 - [Présentation du projet](#-projet--portfolio-dynamique-avec-dashboard)
+  - [Énoncé](#Énoncé)
 - [Pages et Fonctionnalitées](#Pages-et-Fonctionnalitées)
+  - [Pages d&#39;accueil](Pages-d'accueil)
+  - 
 - [Technologies](#technologies)
 - [Installation](#Installation)
 
@@ -29,7 +32,7 @@ Ce projet est un portofolio dynamique, créé en suivant un cahier des charges. 
 
 Il est possible de modifier le frontend pour ajouter la possibilité d'avoir plusieurs portfolios de plusieurs comptes.
 
-Énoncé :
+### Énoncé :
 
 Vous allez concevoir une application **MERN** permettant aux utilisateurs de gérer et
 afficher leurs compétences via un portfolio dynamique. L'application devra être
@@ -87,19 +90,21 @@ reCAPTCHA ou Tarteaucitron) pour sécuriser l’authentification.
 * Un compte Cloudinary pour gérer les fichiers multimédia.
 * Clé Google reCAPTCHA.
 
-1. Clonnez le repo dans le dossier de votre choix
+### 1. Clonnez le repo dans le dossier de votre choix
 
-   ```bash
+```bash
    git clone https://github.com/Eb-Wan/EvalBackendAfec.git && cd EvalBackendAfec 
-   ```
-2. Installez les dépendances
+```
 
-   ```bash
+### 2. Installez les dépendances
+
+```bash
    cd backend && npm install && cd ../frontend && npm install && cd ..
-   ```
-3. Créez un fichier `.env` avec les variables d'environnement dans le dossier backend
+```
 
-   ```ini
+### 3. Créez un fichier `.env` avec les variables d'environnement dans le dossier backend
+
+```ini
    PORT = <PORT>
    MONGO_URI = <Lien vers votre BDD MONGODB>
    JWT_SECRET = <VOTRE CLÉ POUR CRYPTER LE JWT>
@@ -114,10 +119,11 @@ reCAPTCHA ou Tarteaucitron) pour sécuriser l’authentification.
    RECAPTCHA_SECRET = <VOTRE CODE SECRET RECAPTCHA>
 
    PROD_ENV = <false/true>
-   ```
-4. Créez un autre fichier `.env` avec les variables d'environnement dans le dossier frontend
+```
 
-   ```ini
+### 4. Créez un autre fichier `.env` avec les variables d'environnement dans le dossier frontend
+
+```ini
    VITE_API_URL=<URL VERS VOTRE BACKEND ex: http://backend.com>
    VITE_CAPTCHA_SITE=<VOTRE CLÉ DE SITE RECAPTCHA>
-   ```
+```
