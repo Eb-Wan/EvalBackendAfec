@@ -1,5 +1,3 @@
-    
-
 # Projet d'évalutation AFEC
 
 ## Index
@@ -71,9 +69,22 @@ reCAPTCHA ou Tarteaucitron) pour sécuriser l’authentification.
 * ![Vercel](https://img.shields.io/badge/Vercel-Deployment-blue?logo=vercel) Hébergement du frontend (serveur React)
 * ![Render](https://img.shields.io/badge/Render-Deployment-lightgrey?logo=render) Hébergement du backend (serveur Express)
 
-## Installation :
+## Déploiement
 
-### Prérequis :
+Frontend ==> [https://eval-backend-afec.vercel.app/](https://eval-backend-afec.vercel.app/)
+Backend ==> [https://eval-backend-afec.vercel.app/](https://evalbackendafec.onrender.com/)
+
+Version PC
+
+![Page-Principal-Version-Desktop](./images/Screenshot%202025-03-04%20at%2019-55-08%20John%20Doe%20-%20Designer%20web%20et%20photographe%20professionnel.png)
+
+Version Mobile
+
+![Page-Principal-Version-Mobile](./images/Screenshot%202025-03-04%20at%2019-55-30%20John%20Doe%20-%20Designer%20web%20et%20photographe%20professionnel.png)
+
+## Installation
+
+### Prérequis
 
 * URI de connexion à votre base de données MongoDB.
 * Un compte Cloudinary pour gérer les fichiers multimédia.
